@@ -1,2 +1,2 @@
 #!/bin/bash
-ls -dA */ | wc -1
+find . -type d -ls | wc -1
