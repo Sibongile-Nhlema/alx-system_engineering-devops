@@ -1,2 +1,2 @@
-#!/bin/bash
-ls -l | tr '/n' '/o' | cut -z -d
+#!/bin/bash 
+paste -d, - - | cut -d. -fl
