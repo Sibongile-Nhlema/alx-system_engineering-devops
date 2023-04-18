@@ -1,2 +1,2 @@
 #!/bin/bash
-tr '/n' '/o' | cut -z -d
+ls -l | tr '/n' '/o' | cut -z -d
