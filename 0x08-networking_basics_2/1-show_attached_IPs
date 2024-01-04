@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# This script displays all active IPv$ IP
+ifconfig | grep -Eo '(addr:)?([0-9]*\.){3}[0-9]*'
