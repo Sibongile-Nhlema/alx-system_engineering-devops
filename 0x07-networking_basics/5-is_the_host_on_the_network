@@ -2,7 +2,7 @@
 # This script Accepts a string as an argument
 # Displays Usage: 5-is_the_host_on_the_network {IP_ADDRESS} if no argument passed
 # the IP is Pinged 5 times
-if [[ $1 =~ ^[0-9]{1.3}\.[0-9]{1.3}\.[0-9]{1.3}\.[0-9]{1.3}$ ]]
+if [[ $1 =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]
 then
 	ping -c 5 "$1"
 else
