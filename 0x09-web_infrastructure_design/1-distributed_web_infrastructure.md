@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-https://imgur.com/a/chA9Jv0
-=======
-1-distributed_web_infrastructure
+# 1-distributed_web_infrastructure
 
 ## Link :
 https://imgur.com/a/chA9Jv0
@@ -31,4 +28,3 @@ The lack of monitoring makes maintenance difficult as it will require extensive 
 ### Primary Replica Cluster:
 
 This is a design that has a central Database that handles all read and write operations. It has a number of other replica dabases that perform read operation and can serve as a replacement to the main Database should a failover occur.
->>>>>>> 59f7bca674079a8cb63158fa958d40759b01d6a4
