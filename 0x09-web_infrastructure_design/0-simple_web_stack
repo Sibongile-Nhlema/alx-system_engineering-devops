@@ -1,23 +1,18 @@
-0. Simple web stack
---------------------
+# 0. Simple web stack
 
-Link :
-------
+## Link :
 https://imgur.com/a/flvgmSk
 
-Description :
-=============
+## Description :
 
-Server
-------
+## Server
+
     A server is a computer or system that provides services or resources to other computers. (known as clients)
 
-What type of DNS record www is in www.foobar.com:
--------------------------------------------------
+## What type of DNS record www is in www.foobar.com:
     It is a subdomain.
 
-Roles:
-------
+## Roles:
 
 The role of the domain name is to identify Internet resources, such as computers, networks, and services.
 
@@ -27,8 +22,7 @@ The role of the application server is to execute the application logic and gener
 
 The role of the database is to store and manage the website's data.
 
-Issues with this infrastructure:
---------------------------------
+## Issues with this infrastructure:
 
 Single Point of Failure (SPOF):  We are using a single server and a single database so any failure or downtime of the server or database will result in the website not being accessible. The implementation of a back up server, back up database or load balancer would minimize this risk.
 

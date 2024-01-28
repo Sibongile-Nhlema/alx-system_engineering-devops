@@ -1,12 +1,10 @@
-2-secured_and_monitored_web_infrastructure
-===========================================
+# 2-secured_and_monitored_web_infrastructure
 
-Link :
-------
+## Link :
 https://imgur.com/WBpYITC
 
-Description :
--------------
+## Description :
+
 Firewalls act as a barrier between a trusted internal network and an untrusted external network. They monitor and control incoming and outgoing network traffic based on predetermined security rules.
 
 Serving traffic over HTTPS (Hypertext Transfer Protocol Secure) is crucial for ensuring the security and integrity of data transmitted between a client and a server. It encrypts the data exchanged between the client and the server, uses cryptographic algorithms to ensure data integrity, provides authentication and improves trust and confidence.
@@ -17,8 +15,7 @@ The monitoring tool (Datadog) collects data by deploying an agent on the web ser
 
 o monitor your web server QPS, you need to Choose a monitoring tool, Install and configure the monitoring tool, Set up data collection, Visualize and analyze the data, Set up alerts and Continuously monitor and optimize
 
-Issues with the Infrastructure
-==============================
+## Issues with the Infrastructure
 
 Terminating SSL at the Load Balancer Level: Terminating SSL at the load balancer can simplify the configuration and offload the SSL decryption process from the web servers. However, it can introduce a single point of failure and limit the ability to inspect and filter traffic at the server level. To mitigate this, we can consider implementing end-to-end encryption by using SSL/TLS between the load balancer and the web servers.
 
