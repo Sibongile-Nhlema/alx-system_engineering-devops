@@ -1,3 +1,4 @@
+# Creating a file resource for '/tmp/school'
 file { '/tmp/school':
   ensure  => file,
   mode    => '0744',
