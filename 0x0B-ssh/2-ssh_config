@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# configure without password qauthentication
+Host * 
+    PasswordAuthentication no
+    IdentityFile ~/.ssh/school
+ 
