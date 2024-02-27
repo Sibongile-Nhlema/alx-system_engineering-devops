@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Installing Nginx on the server web 1, listens to port 80
+apt-get install nginx -y
+# Configure Nginx to listen on port 80
+sed -i 's/80 default_server/80 default_server;/g' /etc/nginx/sites-available/default
+
+# Restart Nginx without using systemctl
+kill -s HUP $(pgrep nginx)
+
+# Create a default HTML page with "Hello World!"
+echo "Hello World!" > /var/www/html/index.html
+
+# Verify Nginx configuration
+curl -s localhost | grep "Hello World!"
