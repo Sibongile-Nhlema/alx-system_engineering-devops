@@ -1,18 +1,26 @@
 #!/usr/bin/env bash
 
 # Update and install Nginx
+echo "Updating packages..."
 sudo apt-get update -y -qq
+echo "Installing Nginx..."
 sudo apt-get install nginx -y
 
 # Start Nginx service
+echo "Starting Nginx service..."
 sudo service nginx start
 
 # Allow Nginx through the firewall
+echo "Allowing Nginx through the firewall..."
 sudo ufw allow 'Nginx HTTP'
 
 # Create a default index.html file with "Hello World"
+echo "Creating default index.html file..."
 echo "Hello World!" | sudo tee /var/www/html/index.html
 
 # Restart Nginx (alternative to systemctl)
-sudo kill -HUP $(pgrep nginx) 
+echo "Restarting Nginx..."
+sudo kill -HUP $(pgrep nginx)
+
+echo "Nginx setup completed successfully."
 
