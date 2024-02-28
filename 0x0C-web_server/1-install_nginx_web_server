@@ -1,14 +1,18 @@
 #!/usr/bin/env bash
-# Installing Nginx on the server web 1, listens to port 80
-apt-get install nginx -y
-# Configure Nginx to listen on port 80
-sed -i 's/80 default_server/80 default_server;/g' /etc/nginx/sites-available/default
 
-# Restart Nginx without using systemctl
-kill -s HUP $(pgrep nginx)
+# Update and install Nginx
+sudo apt-get update -y -qq
+sudo apt-get install nginx -y
 
-# Create a default HTML page with "Hello World!"
-echo "Hello World!" > /var/www/html/index.html
+# Start Nginx service
+sudo service nginx start
 
-# Verify Nginx configuration
-curl -s localhost | grep "Hello World!"
+# Allow Nginx through the firewall
+sudo ufw allow 'Nginx HTTP'
+
+# Create a default index.html file with "Hello World"
+echo "Hello World!" | sudo tee /var/www/html/index.html
+
+# Restart Nginx (alternative to systemctl)
+sudo kill -HUP $(pgrep nginx) 
+
