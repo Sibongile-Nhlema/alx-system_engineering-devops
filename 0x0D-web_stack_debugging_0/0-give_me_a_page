@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # The script restarts Apache and creates the file with the string "Hello Hoblerton"
 
-service apache2 restart
-echo "Hello Holberton" | sudo tee /var/www/html/index.html
-
+sudo service apache2 restart
+sudo echo "Hello Holberton" | sudo tee /var/www/html/index.html
