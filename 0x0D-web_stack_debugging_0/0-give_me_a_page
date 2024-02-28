@@ -2,4 +2,5 @@
 # The script restarts Apache and creates the file with the string "Hello Hoblerton"
 
 service apache2 restart
-echo "Hello Holberton" > /var/www/html/index.html
+echo "Hello Holberton" | sudo tee /var/www/html/index.html
+
