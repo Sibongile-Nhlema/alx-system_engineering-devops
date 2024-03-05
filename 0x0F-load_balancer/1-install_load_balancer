@@ -7,22 +7,26 @@ sudo apt update
 sudo apt install haproxy -y
 
 # Configure HAProxy
-echo "
+server_config=\ 
+"
 frontend load_balancer
     bind *:80
+    mode http
     default_backend webservers
-
 backend webservers
     balance roundrobin
-    server web-01 100.25.222.45:80 check
-    server web-02 54.236.43.107:80 check
-" | sudo tee /etc/haproxy/haproxy.cfg
+    server 410386-web-01 100.25.222.45:80 check
+    server 410386-web-02 54.236.43.107:80 check
+"
 
-# Enable HAProxy management via init script
-sudo systemctl enable haproxy
+echo "$server_config" | sudo tee -a /etc/haproxy/haproxy.cfg
 
-# Restart HAProxy service
-sudo systemctl restart haproxy
+# enable haproxy to be started by init script
+echo "ENABLED=1" | sudo tee -a /etc/default/haproxy
 
+# Testing the HAproxy configuration file
+sudo haproxy -c -f /etc/haproxy/haproxy.cfg
+
+# Restart the Nginx service
+sudo service haproxy restart 
 echo "done with installation"
-
