@@ -12,17 +12,17 @@ sudo apt-get install -y nginx
 # Create index.html with "Hello World!"
 echo "Hello World!" | sudo tee /var/www/html/index.html
 
-# Fetch server hostname
-server_hostname=$(hostname)
-
 # Define Nginx configuration string with hostname
-new_string="server_name $server_hostname;\n\trewrite ^\/redirect_me https:\/\/youtube.com\/watch?v=3j66gHbyFF8 permanent;"
+new_string="server_name _;\n\trewrite ^\/redirect_me https:\/\/youtube.com\/watch?v=3j66gHbyFF8 permanent;"
 
 # Update Nginx configuration file with custom string
 sudo sed -i "s/server_name _:/$new_string/" /etc/nginx/sites-enabled/default
 
 # Create 404.html with custom message
 echo "C'est n'est pas une page" | sudo tee /var/www/html/404.html
+new_string="listen 80 default_server;\n\terror_page 404 \/404.html;\n\tlocation = \/404.html {\n\t\troot \/var\/www\/html;\n\t\tinternal;\n\t}"
+
+sudo sed -i "s/listen 80 default_server;/$new_string/" /etc/nginx/sites-enabled/default
 
 # Add custom HTTP header with server hostname
 sudo sed -i "/server_name $server_hostname;/a add_header X-Served-By $server_hostname;" /etc/nginx/sites-enabled/default
