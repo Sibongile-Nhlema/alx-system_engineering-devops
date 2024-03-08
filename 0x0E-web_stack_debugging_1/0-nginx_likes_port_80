@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Debugging: 0. Nginx likes port 80
+# reinstalled nginx and recponfigured the default files
+
+# update packages
+sudo apt update
+
+# install Nginx
+sudo apt install install ngnix
+
+# Start Ngnix
+sudo service nginx
+
+# create empty /etc/nginx/sites-available/default
+sudo touch /etc/nginx/sites-available/default
+
+# link fils
+sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+
+# restart Ngnix
+sudo service nginx restart

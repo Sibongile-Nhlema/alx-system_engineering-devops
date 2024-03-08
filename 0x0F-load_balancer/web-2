@@ -1,1 +1,9 @@
-sudo ssh -i ~/.ssh/id_rsa ubuntu@54.236.43.107
+#!/usr/bin/env bash
+
+eval $("ssh-agent")
+
+ssh-add ~/.ssh/school
+
+ssh ubuntu@18.207.142.12
+
+# ssh -i ~/.ssh/id_rsa ubuntu@54.236.43.107
