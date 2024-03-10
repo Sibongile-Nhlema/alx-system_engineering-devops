@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Simpler version of task 0
+sudo apt update
+sudo apt install -y nginx
+sudo touch /etc/nginx/sites-available/default
+sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+sudo service nginx restart
