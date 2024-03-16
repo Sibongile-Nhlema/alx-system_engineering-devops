@@ -6,32 +6,37 @@
 # Update package repositories
 sudo apt-get update
 
-# Install Nginx
-sudo apt-get install -y nginx
+# Install Nginx if not installed
+if ! command -v nginx &> /dev/null; then
+    sudo apt-get install -y nginx
+fi
 
-# Create index.html with "Hello World!"
-echo "Hello World!" | sudo tee /var/www/html/index.html
+# Create index.html with "Hello World!" if not present
+index_file="/var/www/html/index.html"
+if [ ! -f "$index_file" ]; then
+    echo "Hello World!" | sudo tee "$index_file"
+fi
 
-# Define Nginx configuration string with hostname
-new_string="server_name _;\n\trewrite ^\/redirect_me https:\/\/youtube.com\/watch?v=3j66gHbyFF8 permanent;"
+# Define Nginx configuration
+new_config="
+server {
+    listen 80 default_server;
+    error_page 404 /404.html;
+    location = /404.html {
+        root /var/www/html;
+        internal;
+    }
+    add_header X-Served-By $(hostname);
+    rewrite ^/redirect_me https://youtube.com/watch?v=3j66gHbyFF8 permanent;
+}
+"
 
-# Update Nginx configuration file with custom string
-sudo sed -i "s/server_name _:/$new_string/" /etc/nginx/sites-enabled/default
-
-# Create 404.html with custom message
-echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
-new_string="listen 80 default_server;\n\terror_page 404 \/404.html;\n\tlocation = \/404.html {\n\t\troot \/var\/www\/html;\n\t\tinternal;\n\t}"
-
-# Disable SC2154 for the next line
-# shellcheck disable=SC2154
-sudo sed -i "s/listen 80 default_server;/$new_string/" /etc/nginx/sites-enabled/default
-
-# Add custom HTTP header with server hostname
-server_hostname=$(hostname)
-# Disable SC2154 for the next line
-# shellcheck disable=SC2154
-sudo sed -i "/server_name _;/a add_header X-Served-By $server_hostname;" /etc/nginx/sites-enabled/default
+# Update Nginx configuration file
+sudo cp /etc/nginx/sites-enabled/default /etc/nginx/sites-enabled/default.backup
+echo "$new_config" | sudo tee /etc/nginx/sites-enabled/default
 
 # Validate Nginx configuration
 sudo nginx -t
 
+# Reload Nginx to apply changes
+sudo service nginx reload
