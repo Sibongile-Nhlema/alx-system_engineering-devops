@@ -5,6 +5,7 @@
 sudo adduser nginx
 sudo chown -R nginx:nginx /var/log/nginx
 sudo chown -R nginx:nginx /var/lib/nginx
+sudo chown -R nginx:nginx /etc/nginx
 
 sed -i 's/user\s*www.data;/user nginx;/g' /etc/nginx/nginx.conf
 sed -i 's/user\s*root;/user ngnix;/g' /etc/nginx/nginx.config
