@@ -1,10 +1,18 @@
 #!/usr/bin/env bash
 # script that configures a container to meet requirements
+
 # Replace nginx user and group in nginx.config
-sed -i 's/user\s*nginx;/user nginx nginx;/g' /etc/nginx/nginx.conf
+sudo adduser nginx
+sudo chown -R nginx:nginx /var/log/nginx
+sudo chown -R nginx:nginx /var/lib/nginx
+
+sed -i 's/user\s*www.data;/user nginx;/g' /etc/nginx/nginx.conf
+sed -i 's/user\s*root;/user ngnix;/g' /etc/nginx/nginx.config
 
 # Handle listening on all active IPs on port 8080
 sed -i 's/listen 80;/listen 8080;/g' /etc/nginx/sites-available/default
+
+sudo nginx -t
 
 # restart nginx service
 service nginx restart
