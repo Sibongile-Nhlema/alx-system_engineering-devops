@@ -3,25 +3,77 @@
 # The name of the custom HTTP header must be X-Served-By
 # The value of the custom HTTP header must be the hostname of the server Nginx is running on
 
-# Update package repositories
-sudo apt-get update
-sudo apt-get install -y nginx
+function install() {
+	command -v "$1" &> /dev/null
 
-# Create index.html with "Hello World!" if not present
-echo "Hello World!" | sudo tee /var/www/html/index.html 
+	#shellcheck disable=SC2181
+	if [ $? -ne 0 ]; then
+		echo -e "	Installing: $1$\n"
+		sudo apt-get update -y -qq && \
+			sudo apt-get install -y "$1" -qq
+		echo -e "\n"
+	else
+		echo -e "	${1} has already been installed.\n"
+	fi
+}
 
-# Perform a redirection
-new_string="server_name _;\n\trewrite ^\/redirect_me https://youtube.com/watch?v=3j66gHbyFF8 permanent;
-"
-sudo sed -i "s/server_name _;/$new_string/" /etc/nginx/sites-enabled/default
+install nginx
 
-# custom error page
-echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
 
-sudo sed -i "server_name _;/a add_header X-Server-By $HOSTNAME;" /etc/nginx/sites-enabled/default
+# allowing nginx on the ufw firewall
+sudo ufw allow 'Nginx HTTP'
 
-# Validate Nginx configuration
-sudo nginx -t
+# Give the user ownership to website files for easy editing
+if [ -d "/var/www" ]; then
+	sudo chown -R "$USER":"$USER" /var/www
+	sudo chmod -R 755 /var/www
+else
+	sudo mkdir -p /var/www
+	sudo chown -R "$USER":"$USER" /var/www
+	sudo chmod -R 755 /var/www
+fi
 
-# Reload Nginx to apply changes
-sudo service nginx restart
+# create directories if not present as yet
+for dir in /var/www/{html,error}; do
+	if ! [ -d "$dir" ]; then
+		mkdir -p "$dir"
+	fi
+done
+
+# creating new index,html
+echo "Hello World!" > /var/www/html/index.html
+
+# create new error page
+echo "Ceci n'est pas une page" > /var/www/html/error_404.html
+
+# back-up default server config file
+sudo cp /etc/nginx/sites-enabled/default nginx-sites-enabled_default.backup
+
+server_config=\
+"server {
+		listen 80 default_server;
+		listen [::]:80 default_server;
+		root /var/www/html;
+		index index.html index.htm index.nginx-debian.html
+		server_name_;
+		add_header X-Served-By \$hostname;
+		location / {
+			try_files \$uri \$uri/ =404;
+		}
+		if (\$request_filename ~ redirect_me){
+			rewrite ^ https://youtube.com/watch?v=3j66gHbyFF8 permanent;
+		}
+		error_page 404 /error_404.html;
+		location = /error_404.html {
+			internal;
+		}
+}"
+
+#shellcheck disable=SC2154
+echo "$server_config" | sudo dd status=none of=/etc/nginx/sites-enabled/default
+
+if [ "$(pgrep -c nginx)" -le 0 ]; then
+	sudo service nginx start
+else
+	sudo service nginx restart
+fi
