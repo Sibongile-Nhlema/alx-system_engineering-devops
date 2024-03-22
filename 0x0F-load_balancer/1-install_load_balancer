@@ -1,17 +1,30 @@
 #!/usr/bin/env bash
 # Install and configure HAproxy on your lb-01 server
-# Update package lists
-sudo apt-get update -y -qq
 
-# Install HAProxy
-sudo apt install haproxy -y
+echo "Performing updates and checks..."
 
-# craete a backup of the default server config file
+function install_package() {
+	command -v "$1" &> /dev/null
+
+	if [ $? -ne 0 ]; then
+		echo "Installing: $1"
+		sudo apt-get update -y -qq && \
+			sudo apt-get install -y "$1" -qq
+		echo
+	else
+		echo "${1} is already installed."
+	fi
+}
+
+echo "Installing HAProxy..."
+install_package haproxy
+
+echo "Configuring the Load Balancer..."
+
+# Backup default server config file
 sudo cp /etc/haproxy/haproxy.cfg haproxy_default.backup
 
-# Configure HAProxy
-server_config=\ 
-"
+server_config="
 defaults
   mode http
   timeout client 15s
@@ -21,26 +34,23 @@ defaults
 
 frontend yellowtech-frontend
     bind *:80
-    mode http
-    default_backend yelloetech-backend
+    default_backend yellowtech-backend
+
 backend yellowtech-backend
     balance roundrobin
-    server 410386-web-01 100.25.222.45:80 check
-    server 410386-web-02 54.236.43.107:80 check
+    server 151666-web-01 100.25.190.21:80 check
+    server 151666-web-02 54.160.77.90:80 check
 "
 
 echo "$server_config" | sudo dd status=none of=/etc/haproxy/haproxy.cfg
 
-# enable haproxy to be started by init script
+# Enable HAProxy to be started by init script
 echo "ENABLED=1" | sudo dd status=none of=/etc/default/haproxy
 
-# Testing the HAproxy configuration file
-sudo haproxy -c -f /etc/haproxy/haproxy.cfg
+echo "Configured - Roundrobin On web-01 & web-02"
 
-# Restart the Nginx service
 if [ "$(pgrep -c haproxy)" -le 0 ]; then
-        sudo service haproxy start
+	sudo service haproxy start
 else
-        sudo service haproxy restart
-
-echo "Done with the installation"
+	sudo service haproxy restart
+fi
