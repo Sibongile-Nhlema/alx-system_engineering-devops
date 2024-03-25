@@ -27,7 +27,7 @@ def fetch_todo_list_progress():
         username = user_data['username']
 
         # Fetch todos for current employee
-        todos_url = f"{users_url}{employee_id}/todos"
+        todos_url = f"{users_url}/{employee_id}/todos"
         todos_response = requests.get(todos_url)
         todos = todos_response.json()
 
