@@ -4,35 +4,48 @@ Script that returns progress of a TODO list based on employee ID
 Extended to export data in the CVS format
 """
 
-from gather_data_from_an_API import fetch_todo_list_progress
+
 import csv
 import requests
 import sys
 
 
-def export_todo_list_to_csv(employee_id):
+def fetch_todo_list_progress(employee_id):
     """
-    Export the TODO list of an employee to a CSV file.
-    Args:
-        employee_id (int): Employee's designated id.
+    Script that returns progress of a TODO list based on employee ID
+        Args:
+            employee_id (int): employees designated id
     """
-    todos = fetch_todo_list_progress(employee_id)
+    # find the employee name from /users/
+    user_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}"
+    user_response = requests.get(user_url)
+    user_data = user_response.json()
+    employee_name = user_data['name']
+    name = user_data['username']
+    # find todo details
+    uuid = employee_id
+    url = "https://jsonplaceholder.typicode.com/users/{}/todos".format(uuid)
+    response = requests.get(url)
+    todos = response.json()
+    # No erros found , execute code
+    total_tasks = len(todos)
+    completed_tasks = [todo for todo in todos if todo['completed'] is True]
+    num_completed_tasks = len(completed_tasks)
 
-    # Export data in the CSV format
-    f = "{}.csv".format(employee_id)
+    # Export data in the CVS format
+    f = "{}.csv".format(uuid)
     with open(f, mode="w", newline="", encoding='utf-8') as file:
         writer = csv.writer(file, quoting=csv.QUOTE_ALL)
         for todo in todos:
-            writer.writerow([employee_id, todo['title'], todo['completed']])
+            writer.writerow([uuid, name, todo['completed'], todo['title']])
 
 
 if __name__ == "__main__":
     """Handle command line arguments"""
     if len(sys.argv) != 2:
         sys.exit(1)
-
     try:
         employee_id = int(sys.argv[1])
-        export_todo_list_to_csv(employee_id)
+        fetch_todo_list_progress(employee_id)
     except ValueError:
         pass
