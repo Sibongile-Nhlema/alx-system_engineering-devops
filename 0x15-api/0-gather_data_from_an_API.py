@@ -25,11 +25,6 @@ def fetch_todo_list_progress(employee_id):
     response = requests.get(url)
     todos = response.json()
 
-    # Handle errors
-    if response.status_code != 200:
-        print("Failed: Could not fetch API data.")
-        return
-
     # No erros found , execute code
     total_tasks = len(todos)
     completed_tasks = [todo for todo in todos if todo['completed'] is True]
