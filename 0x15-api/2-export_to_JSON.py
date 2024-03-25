@@ -19,6 +19,7 @@ def fetch_todo_list_progress(employee_id):
     user_response = requests.get(user_url)
     user_data = user_response.json()
     employee_name = user_data['name']
+    name = user_data['username']
 
     # find todo details
     uuid = employee_id
@@ -32,7 +33,7 @@ def fetch_todo_list_progress(employee_id):
         task_info = {
                 "task": todo["title"],
                 "completed": todo["completed"],
-                "username": employee_name
+                "username": name
                 }
         completed_tasks.append(task_info)
 
