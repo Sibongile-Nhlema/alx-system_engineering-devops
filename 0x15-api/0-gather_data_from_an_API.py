@@ -26,7 +26,7 @@ def fetch_todo_list_progress(employee_id):
 
     # No erros found , execute code
     total_tasks = len(todos)
-    completed_tasks = [todo for todo in todos if todo['completed'] == True]
+    completed_tasks = [todo for todo in todos if todo['completed'] is True]
     num_completed_tasks = len(completed_tasks)
     employee_name = todos[0]['userId']
 
