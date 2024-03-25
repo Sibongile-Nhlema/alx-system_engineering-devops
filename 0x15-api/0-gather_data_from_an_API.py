@@ -14,6 +14,13 @@ def fetch_todo_list_progress(employee_id):
         Args:
             employee_id (int): employees designated id
     """
+    # find the employee name from /users/
+    user_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}"
+    user_response = requests.get(user_url)
+    user_data = user_response.json()
+    employee_name = user_data['name']
+
+    # find todo details
     uuid = employee_id
     url = "https://jsonplaceholder.typicode.com/users/{}/todos".format(uuid)
     response = requests.get(url)
@@ -28,7 +35,6 @@ def fetch_todo_list_progress(employee_id):
     total_tasks = len(todos)
     completed_tasks = [todo for todo in todos if todo['completed'] is True]
     num_completed_tasks = len(completed_tasks)
-    employee_name = todos[0]['userId']
 
     # print output
     print("Employee {} is done with tasks ({}/{}):".format(employee_name,
@@ -43,9 +49,9 @@ if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("USAGE: Python3 0-gather_data_from_an_API.py <employee_ID>")
         sys.exit(1)
-    else:
-        try:
-            employee_id = int(sys.argv[1])
-            fetch_todo_list_progress(employee_id)
-        except ValueError:
-            print("Employee ID must be an interger")
+
+    try:
+        employee_id = int(sys.argv[1])
+        fetch_todo_list_progress(employee_id)
+    except ValueError:
+        print("Employee ID must be an interger")
