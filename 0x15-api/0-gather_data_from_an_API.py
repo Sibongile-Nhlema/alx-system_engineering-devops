@@ -41,7 +41,6 @@ def fetch_todo_list_progress(employee_id):
 if __name__ == "__main__":
     """Handle command line arguments"""
     if len(sys.argv) != 2:
-        print("USAGE: Python3 0-gather_data_from_an_API.py <employee_ID>")
         sys.exit(1)
 
     try:
