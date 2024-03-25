@@ -35,8 +35,8 @@ def fetch_todo_list_progress(employee_id):
 
     # Export data in the CVS format
     f = "{}.csv".format(uuid)
-    with open(f, mode="w", newline="") as file:
-        writer = csv.writer(file)
+    with open(f, mode="w", newline="", encoding='utf-8') as file:
+        writer = csv.writer(file, quoting=csv.QUOTE_ALL)
         for todo in todos:
             writer.writerow([uuid, name, todo['completed'], todo['title']])
 
