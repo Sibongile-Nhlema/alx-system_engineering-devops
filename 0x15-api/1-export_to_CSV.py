@@ -33,7 +33,6 @@ def fetch_todo_list_progress(employee_id):
     completed_tasks = [todo for todo in todos if todo['completed'] is True]
     num_completed_tasks = len(completed_tasks)
 
-
     # Export data in the CVS format
     f = "{}.csv".format(uuid)
     with open(f, mode="w", newline="") as file:
