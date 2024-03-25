@@ -35,7 +35,7 @@ def fetch_todo_list_progress(employee_id):
                                                           num_completed_tasks,
                                                           total_tasks))
     for task in completed_tasks:
-        print(f"     {task['title']}")
+        print(f"\t {task['title']}")
 
 
 if __name__ == "__main__":
@@ -47,4 +47,4 @@ if __name__ == "__main__":
         employee_id = int(sys.argv[1])
         fetch_todo_list_progress(employee_id)
     except ValueError:
-        print("Employee ID must be an interger")
+        pass
