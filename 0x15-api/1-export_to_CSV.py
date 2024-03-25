@@ -4,41 +4,26 @@ Script that returns progress of a TODO list based on employee ID
 Extended to export data in the CVS format
 """
 
+from gather_data_from_an_API import fetch_todo_list_progress
 import csv
 import requests
 import sys
 
 
-def fetch_todo_list_progress(employee_id):
+def export_todo_list_to_csv(employee_id):
     """
-    Script that returns progress of a TODO list based on employee ID
-        Args:
-            employee_id (int): employees designated id
+    Export the TODO list of an employee to a CSV file.
+    Args:
+        employee_id (int): Employee's designated id.
     """
-    # find the employee name from /users/
-    user_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}"
-    user_response = requests.get(user_url)
-    user_data = user_response.json()
-    employee_name = user_data['name']
-    name = user_data['username']
+    todos = fetch_todo_list_progress(employee_id)
 
-    # find todo details
-    uuid = employee_id
-    url = "https://jsonplaceholder.typicode.com/users/{}/todos".format(uuid)
-    response = requests.get(url)
-    todos = response.json()
-
-    # No erros found , execute code
-    total_tasks = len(todos)
-    completed_tasks = [todo for todo in todos if todo['completed'] is True]
-    num_completed_tasks = len(completed_tasks)
-
-    # Export data in the CVS format
-    f = "{}.csv".format(uuid)
+    # Export data in the CSV format
+    f = "{}.csv".format(employee_id)
     with open(f, mode="w", newline="", encoding='utf-8') as file:
         writer = csv.writer(file, quoting=csv.QUOTE_ALL)
         for todo in todos:
-            writer.writerow([uuid, name, todo['completed'], todo['title']])
+            writer.writerow([employee_id, todo['title'], todo['completed']])
 
 
 if __name__ == "__main__":
@@ -48,6 +33,6 @@ if __name__ == "__main__":
 
     try:
         employee_id = int(sys.argv[1])
-        fetch_todo_list_progress(employee_id)
+        export_todo_list_to_csv(employee_id)
     except ValueError:
         pass
