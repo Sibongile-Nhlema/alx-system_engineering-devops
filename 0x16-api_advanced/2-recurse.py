@@ -23,7 +23,7 @@ def recurse(subreddit, hot_list=[], after=None):
     params = {
         "limit": 100,
     }
-    
+
     if after:
         params['after'] = after
 
