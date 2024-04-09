@@ -41,12 +41,14 @@ def count_words(subreddit, word_list, after=None, counts=None):
                 for keyword in word_list:
                     keyword_lower = keyword.lower()
                     if keyword_lower in title:
-                        counts[keyword_lower] = counts.get(keyword_lower, 0) + 1
+                        counts[keyword_lower] = counts.get(keyword_lower,
+                                                           0) + 1
 
             # Check if there's a next page ('after' token) and recurse
             after = data['data'].get('after')
             if after:
-                return count_words(subreddit, word_list, after=after, counts=counts)
+                return count_words(subreddit, word_list,
+                                   after=after, counts=counts)
 
     # Once all pages are processed, print the sorted counts of keywords
     if counts:
