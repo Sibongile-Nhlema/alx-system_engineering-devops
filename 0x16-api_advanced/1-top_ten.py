@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-"""T
-his module queris the REddit API and prints the first
+"""
+This module queris the REddit API and prints the first
 10 hot posts listed for a given subreddit
 """
 
@@ -25,15 +25,3 @@ def top_ten(subreddit):
     else:
         data = response.json()
         posts = data.get("data", {}).get("children", [])
-
-        if not posts:
-            print("None")
-            return
-
-        for post in posts:
-            post_data = post.get("data", {})
-            title = post_data.get("title")
-            if title:
-                print(title)
-            else:
-                print("Unknown title")
