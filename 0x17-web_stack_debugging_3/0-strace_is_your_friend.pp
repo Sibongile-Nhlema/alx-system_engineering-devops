@@ -13,9 +13,9 @@ service { 'apache2':
 
 # Define a custom function to check Apache service status
 exec { 'check_apache_status':
-  command => 'service apache2 status',
+  command   => 'service apache2 status',
   logoutput => true,
-  notify => Service['apache2'],  # Notify Apache service if status check is performed
+  notify    => Service['apache2'],  # Notify Apache service if status check is performed
 }
 
 # Define a custom function to edit the 000-default.conf file
@@ -35,7 +35,7 @@ file { '/var/www/html/wp-config.php':
 
 # Restart Apache service if configuration files have changed
 exec { 'restart_apache':
-  command => 'service apache2 restart',
+  command     => 'service apache2 restart',
   refreshonly => true,
-  subscribe => File['/etc/apache2/sites-available/000-default.conf', '/var/www/html/wp-config.php'],
+  subscribe   => File['/etc/apache2/sites-available/000-default.conf', '/var/www/html/wp-config.php'],
 }
