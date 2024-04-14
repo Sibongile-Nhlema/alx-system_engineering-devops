@@ -1,37 +1,38 @@
 # YellowTech API Infrastructure Outage - Incident Report
 
-**Summary**
+![Oops](https://cdc.govt.nz/wp-content/uploads/2019/06/technical-difficulties-400x250.png)
 
-On July 17, 2024, between 8:12 AM and 9:45 AM GMT, YellowTech's internal customer dashboard experienced significant performance degradation. This led to slow loading times and intermittent errors for users, affecting approximately 50% of internal users accessing critical dashboard functionalities. The root cause was identified as a misconfigured caching layer within our dashboard infrastructure.
+## Summary
 
-**Timeline (GMT)**
+On July 17, 2024, between 8:12 AM and 9:45 AM GMT, YellowTech's internal customer dashboard experienced a serious case of the Mondays, with performance taking an unexpected coffee break. Approximately 50% of users trying to access critical functionalities were caught in the slow lane due to a mischievous misconfiguration in our caching layer.
 
-- **8:12 AM:** Performance degradation detected by monitoring systems.
-- **8:15 AM:** Alerts triggered, notifying engineering team of dashboard issues.
-- **8:30 AM:** Investigation initiated, focusing on database and network performance.
-- **8:45 AM:** Database issues ruled out; focus shifted to application layer.
-- **9:00 AM:** Incident escalated to senior team for detailed analysis.
-- **9:20 AM:** Misconfigured caching layer identified as root cause.
-- **9:30 AM:** Corrective actions initiated to adjust caching configuration.
-- **9:45 AM:** Dashboard performance fully restored following caching adjustments.
+## Root Cause
 
-**Root Cause**
+The incident was triggered by a recent update to the caching configuration, which introduced a misconfiguration that caused excessive cache misses. This overwhelmed our backend servers and led to degraded performance for dashboard users.
 
-The incident was caused by a misconfiguration introduced during a recent update to the caching configuration. This misconfiguration led to an excessive number of cache misses, overwhelming the backend servers and resulting in slow response times or errors for dashboard users.
+## Resolution and Recovery
 
-**Resolution and Recovery**
+Upon detection of the issue at 8:12 AM GMT, our team immediately sprang into action, determined to restore order and banish the Monday blues. By 9:20 AM, we unmasked the misconfigured caching layer as the root cause and swiftly reverted the settings to their stable state. We performed controlled restarts of affected services, and by 9:45 AM, dashboard performance was fully restored.
 
-Upon detection of the issue at 8:12 AM GMT, our team promptly investigated and escalated the incident. By 9:20 AM, the misconfigured caching layer was identified as the primary cause. Immediate corrective actions were taken to revert the caching settings to their previous stable configuration. Services were gradually restarted, and by 9:45 AM, dashboard performance had fully recovered.
+## Timeline (GMT)
 
-**Corrective and Preventative Measures**
+- **8:12 AM:** Monitoring systems detected performance degradation; alarms sounded, signaling the start of our troubleshooting mission.
+- **8:15 AM:** Engineering team assembled and began investigating, diving deep into the application layer for clues.
+- **8:30 AM:** Focused investigation led us closer to the culprit, like detectives unraveling a mystery.
+- **9:00 AM:** Incident escalated to senior team for resolution; urgent meetings and brainstorming sessions ensued.
+- **9:20 AM:** Misconfigured caching layer identified and swiftly corrected, bringing clarity to the chaos.
+- **9:45 AM:** Dashboard performance restored to normal; sighs of relief echoed through YellowTech HQ.
 
-In response to this incident, YellowTech has implemented the following measures:
-- Enhanced change management processes to include more rigorous testing of caching configurations before deployment.
-- Improved monitoring to quickly detect abnormal caching behavior and performance issues.
-- Conducted a comprehensive review of caching configurations across critical services to identify and rectify potential misconfigurations.
+## Corrective and Preventative Measures
 
-These measures aim to bolster our infrastructure against similar incidents in the future, ensuring consistent and reliable performance for our internal dashboard and other critical services.
+To prevent similar incidents in the future and enhance system resilience, we have taken the following actions:
 
-We apologize for any inconvenience caused by this incident and appreciate your understanding as we prioritize improvements to prevent future disruptions.
+- **Enhanced Change Management:** All configuration changes will undergo rigorous testing and review before deployment, ensuring no mischievous misconfigurations slip through the cracks.
+- **Improved Monitoring:** Enhanced monitoring systems to proactively detect and alert us of performance anomalies before they disrupt our Monday mornings.
+- **Caching Configuration Review:** Conducted a comprehensive review of all caching configurations to ensure alignment with best practices and performance requirements.
 
-*For more information or inquiries, please contact the YellowTech API Infrastructure Team.*
+## Conclusion
+
+We apologize for any inconvenience caused by this incident and appreciate your understanding. Our team is committed to continuously improving our systems and ensuring the reliability of our services.
+
+For further inquiries or assistance, please contact the YellowTech API Infrastructure Team.
