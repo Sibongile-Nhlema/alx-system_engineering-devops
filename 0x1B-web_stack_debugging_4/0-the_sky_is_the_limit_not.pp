@@ -2,7 +2,7 @@
 
 # update the ulimit values to accomodate the requests (soft - 1024, hard - 4096)
 exec { 'fix--ulimit--to--hard--limit':
-  command => '/bin/sed -i "s/\\(\\s*\\)ulimit -n 15/\\1ulimit -n 4096/" /etc/default/nginx',
+  command => '/bin/sed -i "s/15/4096/g" /etc/default/nginx',
   path    => '/usr/local/bin:/bin/',
 }
 
